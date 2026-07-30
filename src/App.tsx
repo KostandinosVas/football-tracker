@@ -1,12 +1,20 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "./assets/vite.svg";
-import heroImg from "./assets/hero.png";
+import { useMatches } from "./features/matches/hooks/useMatches";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const { matches, isLoading, error } = useMatches();
 
-  return <>gamisou</>;
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
+  return (
+    <ul>
+      {matches.map((m) => (
+        <li key={m.id}>
+          {m.homeTeam.name} vs {m.awayTeam.name} — {m.status}
+        </li>
+      ))}
+    </ul>
+  );
 }
 
 export default App;
